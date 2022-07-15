@@ -1,13 +1,21 @@
 import { useState } from "react";
+import { db } from "../firebase";
+import { useInputForm } from "./hooks";
 
 function CreatePost() {
-  const [Title, setTitle] = useState("");
-  const [Content, setContent] = useState("");
-  const [SubTitle, setSubTitle] = useState("");
+  const Title = useInputForm("");
+  const Content = useInputForm("");
+  const SubTitle = useInputForm("");
 
   function handleSubmit(e) {
     e.preventDefault();
     console.log("title", Title);
+    db.collection("posts").add({
+      Title: Title.value,
+      Content: Content.value,
+      SubTitle: SubTitle.value,
+      timeStamp: new Date()
+    });
   }
 
   return (
@@ -16,25 +24,17 @@ function CreatePost() {
       <form onSubmit={handleSubmit}>
         <div className="form-field">
           <label>Title</label>
-          <input value={Title} onChange={(e) => setTitle(e.target.value)} />
+          <input {...Title} />
         </div>
 
         <div className="form-field">
           <label>SubTitle</label>
-          <input
-            value={SubTitle}
-            onChange={(e) => setSubTitle(e.target.value)}
-          />
+          <input {...SubTitle} />
         </div>
 
         <div className="form-field">
           <label>Content</label>
-          <textarea
-            value={Content}
-            onChange={(e) => setContent(e.target.value)}
-          >
-            {" "}
-          </textarea>
+          <textarea {...Content}> </textarea>
         </div>
         <button className="create-post-btn">Create Post </button>
       </form>
