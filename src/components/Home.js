@@ -14,6 +14,7 @@ function Home() {
             ...doc.data()
           };
         });
+
         setPosts(posts);
       });
   }, []);
