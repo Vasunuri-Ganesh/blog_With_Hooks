@@ -9,7 +9,7 @@ function CreatePost() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log("title", Title);
+    // console.log("title", Title);
     db.collection("posts").add({
       Title: Title.value,
       Content: Content.value,
